@@ -14,7 +14,7 @@
 ### 代码项目中实现差分包和合并差分包
 1.需要下载整合bsdiff和bzip2
 
-需要下载 [bsdiff-4.3](http://www.daemonology.net/bsdiff/bsdiff-4.3.tar.gz)/[bzip2](https://www.sourceware.org/bzip2/)
+ [bsdiff-4.3](http://www.daemonology.net/bsdiff/bsdiff-4.3.tar.gz)/[bzip2](https://www.sourceware.org/bzip2/)
 
 解压bsdiff复制bsdiff.c和bspatch.c文件
 解压下载的bzip2-1.0.8压缩包,保留里面的.c和.h 
