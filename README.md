@@ -7,8 +7,11 @@
 
 形成一个新版本的安装包。
 
-目前是BSDiff/Patch这种方案实现最多的。bsdiff在mac的编译与使用
+目前是BSDiff/Patch这种方案实现最多的。
 
+ *bsfif可以通过命令行生成差分包和合并差分包，查看这个[链接](https://blog.csdn.net/mysimplelove/article/details/95482984)*
+
+####代码项目中实现差分包和合并差分包
 1.需要下载整合bsdiff和bzip2
 
 需要下载 [bsdiff-4.3](http://www.daemonology.net/bsdiff/bsdiff-4.3.tar.gz)/[bzip2](https://www.sourceware.org/bzip2/)
@@ -42,7 +45,7 @@ add_library( # Sets the name of the library.
         ${bzip_source}
 )
 ```
-接下来就开始编写native方法，具体的请查看bsdiffDemo项目：
+接下来就开始编写native方法，具体的请查看[bsdiffDemo](https://github.com/wds1204/SupportComment/tree/master/bsdiffDemo/src/main)项目：
 
 **一键快速换肤**
 
