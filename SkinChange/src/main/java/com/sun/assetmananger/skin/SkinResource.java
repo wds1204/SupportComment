@@ -13,7 +13,7 @@ import android.util.Log;
 import java.lang.reflect.Method;
 
 /**
- * Copyright (C), 2016-2019, 未来酒店
+ * Copyright (C), 2016-2019
  * File: SkinResource.java
  * Author: wds_sun
  * Date: 2019-09-23 11:26

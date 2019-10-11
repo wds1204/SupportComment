@@ -5,7 +5,7 @@ import android.app.Application;
 import com.sun.assetmananger.skin.SkinManager;
 
 /**
- * Copyright (C), 2016-2019, 未来酒店
+ * Copyright (C), 2016-2019
  * File: App.java
  * Author: wds_sun
  * Date: 2019-09-23 16:34
