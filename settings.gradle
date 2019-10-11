@@ -1,0 +1,2 @@
+include ':app', ':bsdiffDemo', ':SkinChange'
+rootProject.name='SupportComment'

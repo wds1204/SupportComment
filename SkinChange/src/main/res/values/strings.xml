@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AssetMananger</string>
+    <string name="btChange">换肤</string>
+    <string name="btJump">跳转</string>
+    <string name="btReset">重置</string>
+    <string name="text4">文字四</string>
+    <string name="text3">文字三</string>
+    <string name="text2">文字二</string>
+    <string name="text1">文字一</string>
+</resources>
