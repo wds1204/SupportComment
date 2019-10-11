@@ -11,7 +11,7 @@
 
  *bsfif可以通过命令行生成差分包和合并差分包，查看这个[链接](https://blog.csdn.net/mysimplelove/article/details/95482984)*
 
-#### 代码项目中实现差分包和合并差分包
+### 代码项目中实现差分包和合并差分包
 1.需要下载整合bsdiff和bzip2
 
 需要下载 [bsdiff-4.3](http://www.daemonology.net/bsdiff/bsdiff-4.3.tar.gz)/[bzip2](https://www.sourceware.org/bzip2/)
