@@ -12,14 +12,14 @@ import android.app.Application;
 public class App extends Application {
     @Override
     public void onCreate() {
-        super.onCreate();
-        HookStartActivityUtil hook = new HookStartActivityUtil();
         try {
+            HookStartActivityUtil hook = new HookStartActivityUtil(this,getClass());
             hook.hookStartActivity();
             hook.hookLaunchActivity();
         } catch (Exception e) {
-            System.out.println("Exception---->"+e.toString());
             e.printStackTrace();
         }
+        super.onCreate();
+
     }
 }

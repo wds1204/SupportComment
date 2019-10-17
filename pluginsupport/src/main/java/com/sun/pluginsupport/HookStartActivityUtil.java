@@ -1,13 +1,20 @@
 package com.sun.pluginsupport;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.sun.pluginsupport.utils.Reflector;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -23,30 +30,44 @@ import java.lang.reflect.Proxy;
  */
 public class HookStartActivityUtil {
     private static final String TAG = HookStartActivityUtil.class.getName();
+    public static final int EXECUTE_TRANSACTION = 159;
+
+    public static final int LAUNCH_ACTIVITY = 100;
+    private final Class<?> mProxClass;
+    private Context mContext;
+    private String mProxyActivity = "com.sun.pluginsupport.StubActivity";
+
+    public HookStartActivityUtil(Context mContext, Class<?> proxClass) {
+        this.mContext = mContext;
+        this.mProxClass = proxClass;
+    }
 
     public void hookStartActivity() throws Exception {
+
         Class<?> aClass = Class.forName("android.app.IActivityManager");
 
-        Class<?> aClass1 = Class.forName("android.app.ActivityManager");
+        Object aDefault;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+            aDefault=Reflector.on("android.app.ActivityManager").field("IActivityManagerSingleton").get();
+        }else {
+            aDefault=Reflector.on("android.app.ActivityManager").field("gDefault").get();
+        }
 
-        //获取ActivityManager里面 IActivityManagerSingleton属性
-        Field declaredField = aClass1.getDeclaredField("IActivityManagerSingleton");
 
-        declaredField.setAccessible(true);
-        Object aDefault = declaredField.get(null);
+        Field mInstanceField = Reflector.on("android.util.Singleton").field("mInstance").getField();
 
-        Class<?> singletonClass = Class.forName("android.util.Singleton");
-        Field mInstance = singletonClass.getDeclaredField("mInstance");
-        mInstance.setAccessible(true);
-        Object iamInstance = mInstance.get(aDefault);
+        Object iamInstance = Reflector.on("android.util.Singleton").field("mInstance").get(aDefault);
+
 
 
         HookInvocationHandler hookInvocationHandler = new HookInvocationHandler(iamInstance);
         iamInstance = Proxy.newProxyInstance(aClass.getClassLoader()
                 , new Class[]{aClass}, hookInvocationHandler);
 
-        mInstance.set(aDefault, iamInstance);
+        mInstanceField.set(aDefault, iamInstance);
     }
+
+
 
     private class HookInvocationHandler implements InvocationHandler {
         private Object mObject;
@@ -57,58 +78,70 @@ public class HookStartActivityUtil {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            Log.e("TAG", "Hook Name----------->" + method.getName());
 
             if (method.getName().equals("startActivity")) {
-                Intent intents = (Intent) args[2];
-                ComponentName component = intents.getComponent();
-                String className = component.getClassName();
-                String shortClassName = component.getShortClassName();
-                String packageName = component.getPackageName();
+                Intent realIntent = (Intent) args[2];
 
-                Log.e(TAG, "-------->\n"+"shortClassName=>"+shortClassName+" \npackageName=>"+packageName+" \nclassName=>"+className);
+                // 代理的Intent
+                Intent proxyIntent = new Intent();
+                proxyIntent.setComponent(new ComponentName(mContext, mProxyActivity));
+                // 把原来的Intent绑在代理Intent上面
+                proxyIntent.putExtra("realIntent", realIntent);
+                args[2] = proxyIntent;
+
             }
             return method.invoke(mObject, args);
         }
     }
 
-    public static final int EXECUTE_TRANSACTION = 159;
 
     public void hookLaunchActivity() throws Exception {
 
-        Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
 
-        Field sCurrentActivityThread = activityThreadClass.getDeclaredField("sCurrentActivityThread");
 
-        sCurrentActivityThread.setAccessible(true);
-        Object sCurrentActivityThreadObj = sCurrentActivityThread.get(null);
-        //获取mH  handle
-        Field mHFiled = activityThreadClass.getDeclaredField("mH");
-        mHFiled.setAccessible(true);
-        Handler mH = (Handler) mHFiled.get(sCurrentActivityThreadObj);
-//
+        Object sCurrentActivityThreadObj = Reflector.on("android.app.ActivityThread").field("sCurrentActivityThread").get();
+        Handler mH = Reflector.on("android.app.ActivityThread").field("mH").get(sCurrentActivityThreadObj);
+
         Field mCallbackFiled = Handler.class.getDeclaredField("mCallback");
-
         mCallbackFiled.setAccessible(true);
-//
-        mCallbackFiled.set(mH,new ActivityThreadHandlerCallBack());
 
+        mCallbackFiled.set(mH, new ActivityThreadHandlerCallBack());
 
     }
 
 
-    class ActivityThreadHandlerCallBack implements Handler.Callback{
+    class ActivityThreadHandlerCallBack implements Handler.Callback {
 
         @Override
         public boolean handleMessage(@NonNull Message msg) {
+            Log.e("TAG", "what------->" + msg.what);
             switch (msg.what) {
                 case EXECUTE_TRANSACTION:
+                case LAUNCH_ACTIVITY:
 
-                    Log.e("TAG", "what------->"+msg.what);
-
+                    handleLaunchActivity(msg);
                     break;
             }
             return false;
+        }
+    }
+
+    private void handleLaunchActivity(Message msg) {
+
+        try {
+            Object obj = msg.obj;
+            Field intentField = obj.getClass().getDeclaredField("intent");
+            intentField.setAccessible(true);
+            Intent proxyIntent = (Intent) intentField.get(obj);
+            //获取代理的意图
+            Intent realIntent = proxyIntent.getParcelableExtra("realIntent");
+            //还原真实的意图
+            if (realIntent != null) {
+                intentField.set(obj, realIntent);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

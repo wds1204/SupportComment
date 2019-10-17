@@ -15,11 +15,17 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //NewActivity没有在AndroidManifest中注册
                 Intent intent = new Intent(MainActivity.this, NewActivity.class);
                 startActivity(intent);
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }
