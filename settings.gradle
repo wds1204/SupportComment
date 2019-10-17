@@ -1,2 +1,2 @@
-include ':app', ':bsdiffDemo', ':SkinChange', ':DexHot'
+include ':app', ':bsdiffDemo', ':SkinChange', ':DexHot', ':pluginsupport'
 rootProject.name='SupportComment'

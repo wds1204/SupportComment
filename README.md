@@ -80,4 +80,21 @@ public class MainActivity extends BaseSkinActivity {
 如有特殊自定义View需要换肤，可在提高的changeSkin回调中自己实现换肤功能。
 
 
+YY:63317047
+
+### 插件化
+
+
+JDK动态代理源码分析
+
+动态代理解析interface所有方法，会新建一个class,class的名：包名+$Proxy0
+实例化proxy对象，proxy里面就包含了InvocationHandler
+
+Activity的启动流程：
+
+开启任务栈以及管理
+四种模式怎么处理
+Activity实例如何创建
+Activity生命周期
+
 
