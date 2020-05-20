@@ -1,9 +1,9 @@
 package com.sun.supportcomment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,12 +19,16 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
+        tv.requestLayout();
+        tv.invalidate();
         tv.setText(stringFromJNI());
 
         RealSubject realSubject = new RealSubject();
         ProxySubject proxySubject = new ProxySubject(realSubject);
 
         proxySubject.request();
+
+        startService()
     }
 
     /**

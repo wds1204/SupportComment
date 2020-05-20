@@ -3,23 +3,19 @@ package com.sun.pluginsupport;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.sun.pluginsupport.utils.Reflector;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import androidx.annotation.NonNull;
 
 /**
  * Copyright (C)
@@ -80,6 +76,7 @@ public class HookStartActivityUtil {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
             if (method.getName().equals("startActivity")) {
+
                 Intent realIntent = (Intent) args[2];
 
                 // 代理的Intent

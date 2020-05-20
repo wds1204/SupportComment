@@ -1,12 +1,7 @@
 package com.sun.bsdiffdemo;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -14,8 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sun.bsdiffdemo.utils.SignCheck;
 import com.sun.bsdiffdemo.utils.UriparseUtils;
@@ -25,6 +18,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
     List list = new ArrayList<String>();
@@ -50,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        startService()
+
 
     }
 
@@ -178,4 +178,11 @@ public class MainActivity extends AppCompatActivity {
      * @param newPath
      */
     public native void patch(String oldApk, String diff, String newPath);
+
+    public native void nativeMain(int argc, int[] argv);
+
+    public void nativeMain(View view) {
+        int[] argv={4,1,5,7};
+        nativeMain(4,argv);
+    }
 }
