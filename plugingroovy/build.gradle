@@ -1,0 +1,24 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group='com.sun.plugin'
+version='1.0.1'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+
+}
+
+repositories {
+    mavenCentral() //必须
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
+}

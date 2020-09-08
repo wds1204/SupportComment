@@ -1,2 +1,5 @@
-include ':app', ':bsdiffDemo', ':SkinChange', ':DexHot', ':pluginsupport'
+include ':app',
+//        ':bsdiffDemo',
+        ':SkinChange',
+        ':DexHot', ':pluginsupport', ':plugingroovy', ':lifecycleplugin'
 rootProject.name='SupportComment'

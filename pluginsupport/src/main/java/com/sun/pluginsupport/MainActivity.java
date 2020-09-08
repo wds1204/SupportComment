@@ -1,10 +1,11 @@
 package com.sun.pluginsupport;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        startService(new Intent(this,MyService.class));
+
     }
 
     @Override
