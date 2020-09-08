@@ -44,7 +44,7 @@ public class LifecycleMethodVisitor extends org.objectweb.asm.MethodVisitor impl
             Label l9 = new Label();
             mv.visitLabel(l9);
             mv.visitLineNumber(21, l9);
-            mv.visitLdcInsn("benz");
+            mv.visitLdcInsn("WDS");
             mv.visitTypeInsn(Opcodes.NEW, "java/lang/StringBuilder");
             mv.visitInsn(Opcodes.DUP);
             mv.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
