@@ -22,6 +22,20 @@ android {
         }
     }
 
+    afterEvaluate {
+        for (variant in android.applicationVariants) {
+
+            def scope = variant.getVariantData().getScope()
+
+            println("scope:::${scope}")
+
+//            String mergeTaskName = scope.getMergeResourcesTask().name
+//            def mergeTask = tasks.getByName(mergeTaskName)
+
+
+        }
+    }
+
 }
 
 dependencies {

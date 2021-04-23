@@ -24,8 +24,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.4'
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
-        classpath 'com.meituan.android.walle:plugin:1.1.6'
+//        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.17'
+//        classpath 'com.meituan.android.walle:plugin:1.1.6'
         classpath 'com.sun.lifecycleplugin:lifecycleplugin:1.0.0'
 
 

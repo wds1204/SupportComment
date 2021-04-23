@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include <cutils/log.h>
+//#include <cutils/log.h>
 #include <utils/Looper.h>
 #include <utils/Timers.h>
 

@@ -35,7 +35,7 @@ public class DexFile {
             outDexFile.mkdirs();
         }
 
-        // 合并成一个数组
+        /*合并成一个数组*/
         Object applicationDexElement = getDexElementByClassLoader(pathClassLoader);
 
         for (File dexFile : mFixDex) {
@@ -101,7 +101,7 @@ public class DexFile {
      * @param classLoader ClassLoader
      */
     public static Object getDexElementByClassLoader(ClassLoader classLoader) throws Exception {
-        Class<?> classLoaderClass = Class.forName("dalvik.system.BaseDexClassLoader");
+        Class<?> classLoaderClass = Class.forName("dalvik.system.BaseDexClassL  oader");
         Field pathListField = classLoaderClass.getDeclaredField("pathList");
         pathListField.setAccessible(true);
         Object pathList = pathListField.get(classLoader);
